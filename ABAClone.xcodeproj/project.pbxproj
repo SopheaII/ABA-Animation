@@ -7,13 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BA2A83122A89C195007F7927 /* ReorderableForEach.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2A83112A89C194007F7927 /* ReorderableForEach.swift */; };
 		BA33E8352A8323E200769827 /* ABACloneApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA33E8342A8323E200769827 /* ABACloneApp.swift */; };
-		BA33E8372A8323E200769827 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA33E8362A8323E200769827 /* ContentView.swift */; };
+		BA33E8372A8323E200769827 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA33E8362A8323E200769827 /* Home.swift */; };
 		BA33E8392A8323E600769827 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA33E8382A8323E600769827 /* Assets.xcassets */; };
 		BA33E83C2A8323E600769827 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA33E83B2A8323E600769827 /* Preview Assets.xcassets */; };
 		BA33E8462A8323E600769827 /* ABACloneTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA33E8452A8323E600769827 /* ABACloneTests.swift */; };
 		BA33E8502A8323E700769827 /* ABACloneUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA33E84F2A8323E700769827 /* ABACloneUITests.swift */; };
 		BA33E8522A8323E700769827 /* ABACloneUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA33E8512A8323E700769827 /* ABACloneUITestsLaunchTests.swift */; };
+		BA33E86B2A84961F00769827 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA33E86A2A84961F00769827 /* View+Extension.swift */; };
+		BA33E87E2A84A03200769827 /* WorkSans-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA33E8792A84A03200769827 /* WorkSans-SemiBold.ttf */; };
+		BA33E87F2A84A03200769827 /* WorkSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA33E87A2A84A03200769827 /* WorkSans-Regular.ttf */; };
+		BA33E8802A84A03200769827 /* WorkSans-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA33E87B2A84A03200769827 /* WorkSans-Medium.ttf */; };
+		BA33E8812A84A03200769827 /* WorkSans-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA33E87C2A84A03200769827 /* WorkSans-Bold.ttf */; };
+		BA33E8822A84A03200769827 /* WorkSans-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA33E87D2A84A03200769827 /* WorkSans-Light.ttf */; };
+		BA623D8E2A89BD41005844B3 /* ScrollDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA623D8D2A89BD41005844B3 /* ScrollDetector.swift */; };
+		BAA722442A84A3730045B9C3 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA722432A84A3720045B9C3 /* Colors.swift */; };
+		BAA722472A84BC0B0045B9C3 /* HomeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA722462A84BC0B0045B9C3 /* HomeHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,9 +44,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BA2A83112A89C194007F7927 /* ReorderableForEach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReorderableForEach.swift; sourceTree = "<group>"; };
 		BA33E8312A8323E200769827 /* ABAClone.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ABAClone.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA33E8342A8323E200769827 /* ABACloneApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABACloneApp.swift; sourceTree = "<group>"; };
-		BA33E8362A8323E200769827 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BA33E8362A8323E200769827 /* Home.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
 		BA33E8382A8323E600769827 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BA33E83B2A8323E600769827 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		BA33E8412A8323E600769827 /* ABACloneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABACloneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -44,6 +55,16 @@
 		BA33E84B2A8323E700769827 /* ABACloneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ABACloneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA33E84F2A8323E700769827 /* ABACloneUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABACloneUITests.swift; sourceTree = "<group>"; };
 		BA33E8512A8323E700769827 /* ABACloneUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ABACloneUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		BA33E86A2A84961F00769827 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
+		BA33E8762A849F5F00769827 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		BA33E8792A84A03200769827 /* WorkSans-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "WorkSans-SemiBold.ttf"; sourceTree = "<group>"; };
+		BA33E87A2A84A03200769827 /* WorkSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "WorkSans-Regular.ttf"; sourceTree = "<group>"; };
+		BA33E87B2A84A03200769827 /* WorkSans-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "WorkSans-Medium.ttf"; sourceTree = "<group>"; };
+		BA33E87C2A84A03200769827 /* WorkSans-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "WorkSans-Bold.ttf"; sourceTree = "<group>"; };
+		BA33E87D2A84A03200769827 /* WorkSans-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "WorkSans-Light.ttf"; sourceTree = "<group>"; };
+		BA623D8D2A89BD41005844B3 /* ScrollDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollDetector.swift; sourceTree = "<group>"; };
+		BAA722432A84A3720045B9C3 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
+		BAA722462A84BC0B0045B9C3 /* HomeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,9 +115,12 @@
 		BA33E8332A8323E200769827 /* ABAClone */ = {
 			isa = PBXGroup;
 			children = (
+				BA33E8762A849F5F00769827 /* Info.plist */,
+				BA33E8682A84957400769827 /* Common */,
+				BA33E85F2A848CC000769827 /* Scenes */,
+				BA33E85E2A8326B900769827 /* Application */,
 				BA33E8342A8323E200769827 /* ABACloneApp.swift */,
-				BA33E8362A8323E200769827 /* ContentView.swift */,
-				BA33E8382A8323E600769827 /* Assets.xcassets */,
+				BA33E8612A84941100769827 /* Resources */,
 				BA33E83A2A8323E600769827 /* Preview Content */,
 			);
 			path = ABAClone;
@@ -125,6 +149,86 @@
 				BA33E8512A8323E700769827 /* ABACloneUITestsLaunchTests.swift */,
 			);
 			path = ABACloneUITests;
+			sourceTree = "<group>";
+		};
+		BA33E85E2A8326B900769827 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		BA33E85F2A848CC000769827 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				BA33E8602A848CF500769827 /* Home */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		BA33E8602A848CF500769827 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				BAA722452A84BBEC0045B9C3 /* HomeHeader */,
+				BA33E8362A8323E200769827 /* Home.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		BA33E8612A84941100769827 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				BA33E8622A84942400769827 /* Font */,
+				BA33E8382A8323E600769827 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		BA33E8622A84942400769827 /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				BA33E87C2A84A03200769827 /* WorkSans-Bold.ttf */,
+				BA33E87D2A84A03200769827 /* WorkSans-Light.ttf */,
+				BA33E87B2A84A03200769827 /* WorkSans-Medium.ttf */,
+				BA33E87A2A84A03200769827 /* WorkSans-Regular.ttf */,
+				BA33E8792A84A03200769827 /* WorkSans-SemiBold.ttf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
+		BA33E8682A84957400769827 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				BA623D8C2A89BD2E005844B3 /* Utils */,
+				BA33E8692A84958300769827 /* Extension */,
+				BAA722432A84A3720045B9C3 /* Colors.swift */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		BA33E8692A84958300769827 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				BA33E86A2A84961F00769827 /* View+Extension.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
+		BA623D8C2A89BD2E005844B3 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				BA623D8D2A89BD41005844B3 /* ScrollDetector.swift */,
+				BA2A83112A89C194007F7927 /* ReorderableForEach.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		BAA722452A84BBEC0045B9C3 /* HomeHeader */ = {
+			isa = PBXGroup;
+			children = (
+				BAA722462A84BC0B0045B9C3 /* HomeHeader.swift */,
+			);
+			path = HomeHeader;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -231,8 +335,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA33E87E2A84A03200769827 /* WorkSans-SemiBold.ttf in Resources */,
 				BA33E83C2A8323E600769827 /* Preview Assets.xcassets in Resources */,
+				BA33E8822A84A03200769827 /* WorkSans-Light.ttf in Resources */,
 				BA33E8392A8323E600769827 /* Assets.xcassets in Resources */,
+				BA33E8802A84A03200769827 /* WorkSans-Medium.ttf in Resources */,
+				BA33E87F2A84A03200769827 /* WorkSans-Regular.ttf in Resources */,
+				BA33E8812A84A03200769827 /* WorkSans-Bold.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,8 +366,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BA33E8372A8323E200769827 /* ContentView.swift in Sources */,
+				BA33E8372A8323E200769827 /* Home.swift in Sources */,
+				BAA722442A84A3730045B9C3 /* Colors.swift in Sources */,
+				BA623D8E2A89BD41005844B3 /* ScrollDetector.swift in Sources */,
+				BA2A83122A89C195007F7927 /* ReorderableForEach.swift in Sources */,
+				BA33E86B2A84961F00769827 /* View+Extension.swift in Sources */,
 				BA33E8352A8323E200769827 /* ABACloneApp.swift in Sources */,
+				BAA722472A84BC0B0045B9C3 /* HomeHeader.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,8 +533,9 @@
 				DEVELOPMENT_ASSET_PATHS = "\"ABAClone/Preview Content\"";
 				DEVELOPMENT_TEAM = JF5Q6HSWBK;
 				ENABLE_PREVIEWS = YES;
+				EXCLUDED_ARCHS = arm64;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = ABAClone/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -449,7 +564,7 @@
 				DEVELOPMENT_TEAM = JF5Q6HSWBK;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_FILE = ABAClone/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
