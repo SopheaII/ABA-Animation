@@ -43,3 +43,29 @@ extension View {
         else { self }
     }
 }
+
+struct PressAndReleaseModifier: ViewModifier {
+    @Binding var pressing: Bool
+    var onRelease: () -> Void
+
+    func body(content: Content) -> some View {
+        content
+            .simultaneousGesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged{ state in
+                        
+                        pressing = true
+                    }
+                    .onEnded{ _ in
+                        pressing = false
+                        onRelease()
+                    }
+            )
+    }
+}
+
+extension View {
+    func pressAndReleaseAction(pressing: Binding<Bool>, onRelease: @escaping (() -> Void)) -> some View {
+        modifier(PressAndReleaseModifier(pressing: pressing, onRelease: onRelease))
+    }
+}

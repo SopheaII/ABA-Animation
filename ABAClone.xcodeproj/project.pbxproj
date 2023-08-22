@@ -24,6 +24,7 @@
 		BA623D8E2A89BD41005844B3 /* ScrollDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA623D8D2A89BD41005844B3 /* ScrollDetector.swift */; };
 		BAA722442A84A3730045B9C3 /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA722432A84A3720045B9C3 /* Colors.swift */; };
 		BAA722472A84BC0B0045B9C3 /* HomeHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA722462A84BC0B0045B9C3 /* HomeHeader.swift */; };
+		BAEE12C22A936F3E00A736E0 /* WiggleModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAEE12C12A936F3E00A736E0 /* WiggleModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +66,7 @@
 		BA623D8D2A89BD41005844B3 /* ScrollDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollDetector.swift; sourceTree = "<group>"; };
 		BAA722432A84A3720045B9C3 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		BAA722462A84BC0B0045B9C3 /* HomeHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeHeader.swift; sourceTree = "<group>"; };
+		BAEE12C12A936F3E00A736E0 /* WiggleModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiggleModifier.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -219,6 +221,7 @@
 			children = (
 				BA623D8D2A89BD41005844B3 /* ScrollDetector.swift */,
 				BA2A83112A89C194007F7927 /* ReorderableForEach.swift */,
+				BAEE12C12A936F3E00A736E0 /* WiggleModifier.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				BA623D8E2A89BD41005844B3 /* ScrollDetector.swift in Sources */,
 				BA2A83122A89C195007F7927 /* ReorderableForEach.swift in Sources */,
 				BA33E86B2A84961F00769827 /* View+Extension.swift in Sources */,
+				BAEE12C22A936F3E00A736E0 /* WiggleModifier.swift in Sources */,
 				BA33E8352A8323E200769827 /* ABACloneApp.swift in Sources */,
 				BAA722472A84BC0B0045B9C3 /* HomeHeader.swift in Sources */,
 			);
