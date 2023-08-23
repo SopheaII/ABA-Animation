@@ -15,6 +15,7 @@ enum Colors {
     case blueLight
     case grayText
     case eyeBg
+    case discoveryFrame
     
     var value: Color {
         var colorValue: Color!
@@ -34,7 +35,8 @@ enum Colors {
             colorValue = Color("grayText")
         case .eyeBg:
             colorValue = Color("eyeBg")
-            
+        case .discoveryFrame:
+            colorValue = Color("discoveryFrame")
         }
         return colorValue
     }

@@ -11,14 +11,12 @@ struct HomeHeader: View {
     
     var body: some View {
         HStack(spacing: 15){
-            Image("icBear")
+            Image("icNotification")
                 .resizable()
-                .clipShape(Circle())
                 .scaledToFill()
-                .frame(width: 30, height: 30)
-            Image("icBear")
+                .frame(width: 25, height: 25)
+            Image("icKHQR")
                 .resizable()
-                .clipShape(Circle())
                 .scaledToFill()
                 .frame(width: 30, height: 30)
         }

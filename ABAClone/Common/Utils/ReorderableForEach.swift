@@ -18,7 +18,6 @@ where Data : Hashable, Content : View {
     
     var startIndex: Int
     var endIndex: Int
-//    @State var provider: MYItemProvider?
     @State private var isUserMoveWidget = false
     
     @State private var isWiggling = true
@@ -119,10 +118,6 @@ where Data : Hashable, Content : View {
             hasChangedLocation = false
             draggedItem = nil
             return true
-        }
-        
-        func dropExited(info: DropInfo) {
-            print("debugtest ----- dropExited")
         }
     }
 }
