@@ -1,7 +1,7 @@
 //
 //  ContentView.swift
 //  ABAClone
-//
+//k
 //  Created by Sao Sophea on 9/8/23.
 //
 
@@ -37,6 +37,18 @@ struct Home: View {
         ServiceInfo(name: "ABA Scan", icon: "icScan"),
         ServiceInfo(name: "Favorites", icon: "icFavorite"),
         ServiceInfo(name: "Transfers", icon: "icTransfer"),
+//        ServiceInfo(name: "E-cash", icon: "icECash"),
+//        ServiceInfo(name: "Services", icon: "icService"),
+//        ServiceInfo(name: "New Account", icon: "icNewAccount"),
+    ]
+    
+    @State private var mainServices1 = [
+//        ServiceInfo(name: "Account", icon: "icAccount"),
+//        ServiceInfo(name: "Cards", icon: "icCard"),
+//        ServiceInfo(name: "Payments", icon: "icPayment"),
+//        ServiceInfo(name: "ABA Scan", icon: "icScan"),
+//        ServiceInfo(name: "Favorites", icon: "icFavorite"),
+//        ServiceInfo(name: "Transfers", icon: "icTransfer"),
         ServiceInfo(name: "E-cash", icon: "icECash"),
         ServiceInfo(name: "Services", icon: "icService"),
         ServiceInfo(name: "New Account", icon: "icNewAccount"),
@@ -51,64 +63,66 @@ struct Home: View {
     @State private var isScrollToTop = false
     @State var draggedServiceItem: ServiceInfo?
     @State private var isServiceChangedLocation: Bool = false
+    @State private var isServiceWidgetMove = false
     
     @State private var widgetInfoList = [EXPLORED_ID, PROMOTION_ID, DISCOVER_ID]
     @State var draggedWidgetItem: String?
     @State private var allowWidgetReordering = true
     @State private var isWidgetChangedLocation: Bool = false
+    @State private var isWidgetMove = false
+    @State var isItemProviderEnd = false
     
     var body: some View {
         ZStack(alignment: .top) {
             Colors.appBg.value
                 .ignoresSafeArea()
             VStack(alignment: .leading){
-                                VStack(alignment: .leading){
-                                    VStack {
-                                        HomeHeader()
-                                            .frame(maxWidth: .infinity, alignment: .trailing)
-                                    }
-                                    // MARK: - Profile
-                                    HStack(alignment: .center, spacing: 10){
-                                        Image("icBear")
-                                            .resizable()
-                                            .clipShape(Circle())
-                                            .scaledToFill()
-                                            .frame(width: abs(prifileSize), height: abs(prifileSize))
-                                            .padding(2)
-                                            .background(Color.white)
-                                            .clipShape(Circle())
-                                            .animation(.linear(duration: isEndScrolling ? 0.2 : 0), value: prifileSize)
-                                        VStack(alignment: .leading, spacing: 5){
-                                            Text("Hello, Ly Ly!")
-                                                .customFont(.WorkSansSemiBold())
-                                                .foregroundColor(Color.white)
-                                                .opacity(abs(welcomeTitleOpacify))
-                                                .animation(.linear(duration: isEndScrolling ? 0.1 : 0), value: welcomeTitleOpacify)
-                                            Button(action: {  }) {
-                                                Text("View Profile >")
-                                                    .customFont(.WorkSansRegular(size: 14))
-                                                    .foregroundColor(Colors.softText.value)
-                                            }
-                                            .opacity(abs(viewProfileOpacify))
-                                            .animation(.linear(duration: isEndScrolling ? 0.1 : 0), value: viewProfileOpacify)
-                                        }
-                                    }
-                                    .padding([.leading], 5)
-                                    .padding([.bottom], 10)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .offset(y: viewPositionY)
-                                    .frame(height: 0)
-                                    .animation(.linear(duration: viewPositionY < 30 ? 0.1 : 0), value: viewPositionY)
-                                }
-                                .padding([.trailing, .leading], 18)
-                
+                VStack(alignment: .leading){
+                    VStack {
+                        HomeHeader()
+                            .frame(maxWidth: .infinity, alignment: .trailing)
+                    }
+                    // MARK: - Profile
+                    HStack(alignment: .center, spacing: 10){
+                        Image("icBear")
+                            .resizable()
+                            .clipShape(Circle())
+                            .scaledToFill()
+                            .frame(width: abs(prifileSize), height: abs(prifileSize))
+                            .padding(2)
+                            .background(Color.white)
+                            .clipShape(Circle())
+                            .animation(.linear(duration: isEndScrolling ? 0.2 : 0), value: prifileSize)
+                        VStack(alignment: .leading, spacing: 5){
+                            Text("Hello, So Cheat!")
+                                .customFont(.WorkSansSemiBold())
+                                .foregroundColor(Color.white)
+                                .opacity(abs(welcomeTitleOpacify))
+                                .animation(.linear(duration: isEndScrolling ? 0.1 : 0), value: welcomeTitleOpacify)
+                            Button(action: {  }) {
+                                Text("View Profile >")
+                                    .customFont(.WorkSansRegular(size: 14))
+                                    .foregroundColor(Colors.softText.value)
+                            }
+                            .opacity(abs(viewProfileOpacify))
+                            .animation(.linear(duration: isEndScrolling ? 0.1 : 0), value: viewProfileOpacify)
+                        }
+                    }
+                    .padding([.leading], 5)
+                    .padding([.bottom], 10)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .offset(y: viewPositionY)
+                    .frame(height: 0)
+                    .animation(.linear(duration: viewPositionY < 30 ? 0.1 : 0), value: viewPositionY)
+                }
+                .padding([.trailing, .leading], 18)
                 ScrollView(.vertical, showsIndicators: false, content: {
                     ScrollViewReader { scrollViewProxy in
                         Spacer()
                             .frame(height: 70)
                             .id(1)
                         VStack(spacing: 5){
-                            
+
                             // MARK: - Balance Card
                             HStack {
                                 Spacer().frame(width: 18)
@@ -122,7 +136,7 @@ struct Home: View {
                                         .cornerRadius(20)
                                     VStack(alignment: .leading, spacing: 10){
                                         HStack{
-                                            Text("$23882.92")
+                                            Text("$230024.92")
                                                 .customFont(.WorkSansMedium(size: 25))
                                                 .foregroundColor(Colors.textColor.value)
                                                 .lineLimit(1)
@@ -176,13 +190,18 @@ struct Home: View {
                                 }
                                 Spacer().frame(width: 18)
                             }
-                            
+
                             // MARK: - Service Widget
                             HStack {
                                 Spacer().frame(width: 18)
                                 VStack{
                                     LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 3), alignment: .center) {
-                                        ReorderableForEach($mainServices, $draggedServiceItem, allowReordering: $allowServiceReordering, hasChangedLocation: $isServiceChangedLocation) { item in
+                                        ReorderableForEach(firstDataList: $mainServices,
+                                                           secondDataList: $mainServices1,
+                                                           $draggedServiceItem,
+                                                           allowReordering: $allowServiceReordering,
+                                                           hasChangedLocation: $isServiceChangedLocation,
+                                                           isUserMoveWidget: $isServiceWidgetMove) { item in
                                             Button(action: {
                                             }) {
                                                 ZStack {
@@ -218,7 +237,13 @@ struct Home: View {
                                     ScrollView(.horizontal, showsIndicators: false, content: {
                                         HStack{
                                             Spacer().frame(width: 10)
-                                            ReorderableForEach($mainServices, $draggedServiceItem, startIndex: 6, allowReordering: $allowServiceReordering,  hasChangedLocation: $isServiceChangedLocation) { item in
+                                            ReorderableForEach(firstDataList: $mainServices1,
+                                                               secondDataList: $mainServices,
+                                                               $draggedServiceItem,
+                                                               startIndex: 6,
+                                                               allowReordering: $allowServiceReordering,
+                                                               hasChangedLocation: $isServiceChangedLocation,
+                                                               isUserMoveWidget: $isServiceWidgetMove) { item in
                                                 Button(action: {
 
                                                 }) {
@@ -250,9 +275,14 @@ struct Home: View {
                                 .cornerRadius(20)
                                 Spacer().frame(width: 18)
                             }
-                            
+
                             VStack(spacing: 5) {
-                                ReorderableForEach($widgetInfoList, $draggedWidgetItem, allowReordering: $allowWidgetReordering, hasChangedLocation: $isWidgetChangedLocation) { item in
+                                ReorderableForEach(firstDataList:$widgetInfoList,
+                                                   secondDataList: $widgetInfoList,
+                                                   $draggedWidgetItem,
+                                                   allowReordering: $allowWidgetReordering,
+                                                   hasChangedLocation: $isWidgetChangedLocation,
+                                                   isUserMoveWidget: $isWidgetMove) { item in
                                     switch item {
                                     case EXPLORED_ID:
                                         // MARK: - Explore Services
@@ -279,10 +309,18 @@ struct Home: View {
                                                                     .scaledToFill()
                                                                     .frame(width: 60, height: 60)
                                                                     .cornerRadius(10)
+                                                                
                                                                 Text(item.name)
                                                                     .customFont(.WorkSansMedium(size: 16))
                                                                     .foregroundColor(.white)
-                                                                    .lineLimit(2)
+                                                                    .lineLimit(1)
+//                                                                    .fixedSize(horizontal: false, vertical: true)
+                                                                    .mask{
+                                                                        LinearGradient(colors: [.clear, .black, .black, .clear],
+                                                                                       startPoint: UnitPoint(x: 1, y: 0), endPoint: UnitPoint(x: -1, y: 0))
+                                                                               .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                                                    }
+
                                                             }
                                                             .frame(width: 80)
                                                         }
@@ -291,6 +329,7 @@ struct Home: View {
                                                     .padding([.top, .bottom], 25)
                                                     .padding([.leading, .trailing], 10)
                                                 })
+                                                .padding([.top, .bottom], 5)
                                                 .background(Colors.widgetFrameColor.value)
                                                 .cornerRadius(20)
                                             }
@@ -299,7 +338,7 @@ struct Home: View {
                                         .onChange(of: isWidgetChangedLocation, perform: { newValue in
                                             isServiceChangedLocation = newValue ? true : false
                                         })
-                                        
+
                                     case PROMOTION_ID:
                                         // MARK: - Promotion
                                         HStack {
@@ -364,7 +403,7 @@ struct Home: View {
                                     }
                                 }
                             }
-                            
+
                         }
                         .background {
                             ScrollDetector { offset in
@@ -374,13 +413,13 @@ struct Home: View {
                                         viewPositionY = -currentOffset
                                         if minScrollP - offset >= 0 {
                                             viewProfileOpacify = offset > 0.0 ? (minScrollP - offset) / minScrollP: 1
-                                            
+
                                             welcomeTitleOpacify = offset > 15 ? (minScrollP - offset) / (minScrollP - 17): 1
                                         }else if minScrollP - offset < 0 {
                                             viewProfileOpacify = 0
                                             welcomeTitleOpacify = 0
                                         }
-                                        
+
                                         if currentOffset/2 < minScrollP {
                                             headerPaddingBottonAsPercentage = 0
                                             headerHeight = maxHeaderHeight - 2*minScrollP
@@ -410,7 +449,7 @@ struct Home: View {
                                 }else if offset >= 0 {
                                     isScrollToTop = false
                                 }
-                                
+
                             } onDraggingEnd: { offset, velocity in
                                 if (viewPositionY != -minScrollP || viewPositionY != 0) && offset > 0 && offset < 45 {
                                     viewPositionY = profileDefualtOffset
@@ -429,10 +468,10 @@ struct Home: View {
                             }
                         }
                         .id(2)
-                        
+
                     }
                 })
-                //                .padding([.trailing, .leading], 18)
+//                .padding([.trailing, .leading], 18)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }

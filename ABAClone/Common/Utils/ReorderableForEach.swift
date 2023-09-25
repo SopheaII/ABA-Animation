@@ -11,27 +11,32 @@ import UniformTypeIdentifiers
 public struct ReorderableForEach<Data, Content>: View
 where Data : Hashable, Content : View {
     @Binding var data: [Data]
+    @Binding var secondDataList: [Data]
     @Binding var draggedItem: Data?
     @Binding var allowReordering: Bool
     @Binding var hasChangedLocation: Bool
+    @Binding var isUserMoveWidget: Bool
     private let content: (Data) -> Content
     
     var startIndex: Int
     var endIndex: Int
-    @State private var isUserMoveWidget = false
+    @State var isItemProviderEnd = false
     
-    @State private var isWiggling = true
-    
-    public init(_ data: Binding<[Data]>,
+    public init(firstDataList data: Binding<[Data]>,
+                secondDataList: Binding<[Data]>,
                 _ draggedItem: Binding<Data?>,
                 startIndex: Int = 0,
                 allowReordering: Binding<Bool>,
                 hasChangedLocation: Binding<Bool>,
+                isUserMoveWidget: Binding<Bool>,
                 @ViewBuilder content: @escaping (Data) -> Content) {
         _data = data
+        _secondDataList = secondDataList
         _allowReordering = allowReordering
         _draggedItem = draggedItem
         _hasChangedLocation = hasChangedLocation
+        _isUserMoveWidget = isUserMoveWidget
+        
         self.startIndex = startIndex
         self.endIndex = startIndex == 0 ? 6 : data.count
         self.content = content
@@ -39,43 +44,47 @@ where Data : Hashable, Content : View {
     
     public var body: some View {
         ForEach(data, id: \.self) { item in
-            if let index = data.firstIndex(of: item), index < endIndex, index >= startIndex{
-                if allowReordering {
-                    content(item)
-                        .onDrag {
-                            draggedItem = item
-                            var provider = MYItemProvider(contentsOf:  URL(string: "\(item.hashValue)")!)
-                            hasChangedLocation = true
-                            isUserMoveWidget = false
-                            print("debugtest ----- isUserMoveWidget = false")
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
-                                if !isUserMoveWidget && provider != nil {
-                                    print("debugtest ----- didEnd asyncAfter \(startIndex)")
-                                    provider = nil
-                                    draggedItem = nil
-                                    hasChangedLocation = false
-                                }
-                            })
-                            provider?.didEnd = {
-                                DispatchQueue.main.async {
-                                    print("debugtest ----- didEnd")
-                                    draggedItem = nil
-                                    hasChangedLocation = false
-                                }
+            if allowReordering {
+                content(item)
+                    .onDrag {
+                        draggedItem = item
+                        var provider = MYItemProvider(contentsOf:  URL(string: "\(item.hashValue)")!)
+                        isItemProviderEnd = !hasChangedLocation
+                        hasChangedLocation = true
+                        isUserMoveWidget = false
+                        print("debugtest ----- onDrag")
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+                            if !isUserMoveWidget && provider != nil {
+                                print("debugtest ----- didEnd asyncAfter \(startIndex)")
+                                provider = nil
+                                draggedItem = nil
+                                hasChangedLocation = false
+                                isItemProviderEnd = true
                             }
-                            
-                            return provider ?? NSItemProvider(object: "\(item.hashValue)" as NSString)
+                        })
+                        provider?.didEnd = {
+                            print("debugtest ----- \(isItemProviderEnd), \(hasChangedLocation)")
+                            DispatchQueue.main.async {
+                                print("debugtest ----- didEnd \(startIndex)")
+                                draggedItem = nil
+                                hasChangedLocation = false
+                                isItemProviderEnd = true
+                            }
                         }
-                        .onDrop(of: [UTType.plainText], delegate: DragRelocateDelegate(
-                            item: item,
-                            data: $data,
-                            draggedItem: $draggedItem,
-                            hasChangedLocation: $hasChangedLocation,
-                            isUserMoveWidget: $isUserMoveWidget))
-                        .wiggling(isWiggling: $hasChangedLocation, rotationAmount: 3, bounceAmount: 0.3)
-                } else {
-                    content(item)
-                }
+
+                        return provider ?? NSItemProvider(object: "\(item.hashValue)" as NSString)
+                    }
+                    .onDrop(of: [UTType.plainText], delegate: DragRelocateDelegate(
+                        item: item,
+                        data: $data,
+                        secondData: $secondDataList,
+                        draggedItem: $draggedItem,
+                        hasChangedLocation: $hasChangedLocation,
+                        isItemProviderEnd: $isItemProviderEnd,
+                        isUserMoveWidget: $isUserMoveWidget))
+                    .wiggling(isWiggling: $hasChangedLocation, rotationAmount: 3, bounceAmount: 0.3)
+            } else {
+                content(item)
             }
         }
     }
@@ -84,16 +93,25 @@ where Data : Hashable, Content : View {
     where Data : Equatable {
         let item: Data
         @Binding var data: [Data]
+        @Binding var secondData: [Data]
         @Binding var draggedItem: Data?
         @Binding var hasChangedLocation: Bool
+        @Binding var isItemProviderEnd: Bool
         @Binding var isUserMoveWidget: Bool
         
         func dropEntered(info: DropInfo) {
-            guard item != draggedItem,
-                  let current = draggedItem,
-                  let from = data.firstIndex(of: current),
-                  let to = data.firstIndex(of: item)
-            else {
+            guard let current = draggedItem else { return }
+            var from = data.firstIndex(of: current)
+            let to = data.firstIndex(of: item)
+            if item == draggedItem || from == nil || to == nil{
+//                if (from == nil) {
+//                    from  = secondData.firstIndex(of: current)
+//                    withAnimation {
+//                        data[to!] = current
+//                        secondData[from!] = item
+//                    }
+//                }
+                
                 print("debugtest ----- dropEntered return")
                 isUserMoveWidget = true
                 return
@@ -101,10 +119,10 @@ where Data : Hashable, Content : View {
             isUserMoveWidget = true
             print("debugtest ----- dropEntered")
             
-            if data[to] != current {
+            if data[to!] != current {
                 withAnimation {
-                    data.move(fromOffsets: IndexSet(integer: from),
-                              toOffset: (to > from) ? to + 1 : to)
+                    data.move(fromOffsets: IndexSet(integer: from!),
+                              toOffset: (to! > from!) ? to! + 1 : to!)
                 }
             }
         }
@@ -117,7 +135,12 @@ where Data : Hashable, Content : View {
             print("debugtest ----- performDrop")
             hasChangedLocation = false
             draggedItem = nil
+            isItemProviderEnd = true
             return true
+        }
+        
+        func dropExited(info: DropInfo) {
+            print("debugtest ----- dropExited")
         }
     }
 }
