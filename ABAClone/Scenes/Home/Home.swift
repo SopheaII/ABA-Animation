@@ -1,7 +1,7 @@
 //
 //  ContentView.swift
 //  ABAClone
-//k
+//
 //  Created by Sao Sophea on 9/8/23.
 //
 
@@ -28,7 +28,7 @@ struct Home: View {
     @State private var isEndScrolling = false
     @State private var viewProfileOpacify: Double = 1
     @State private var welcomeTitleOpacify: Double = 1
-    @State private var prifileSize: CGFloat = 50
+    @State private var profileSize: CGFloat = 50
     
     @State private var mainServices = [
         ServiceInfo(name: "Account", icon: "icAccount"),
@@ -72,6 +72,51 @@ struct Home: View {
     @State private var isWidgetMove = false
     @State var isItemProviderEnd = false
     
+    func scrollAnimation(offset: CGFloat) {
+        if !isScrollToTop && offset != 0 {
+            let currentOffset = offset - profileDefualtOffset
+            if currentOffset < minScrollP {
+                viewPositionY = -currentOffset
+                if minScrollP - offset >= 0 {
+                    viewProfileOpacify = offset > 0.0 ? (minScrollP - offset) / minScrollP: 1
+
+                    welcomeTitleOpacify = offset > 15 ? (minScrollP - offset) / (minScrollP - 17): 1
+                }else if minScrollP - offset < 0 {
+                    viewProfileOpacify = 0
+                    welcomeTitleOpacify = 0
+                }
+
+                if currentOffset/2 < minScrollP {
+                    headerPaddingBottonAsPercentage = 0
+                    headerHeight = maxHeaderHeight - 2*minScrollP
+                } else if currentOffset <= 0 {
+                    headerPaddingBottonAsPercentage = 1
+                    headerHeight = maxHeaderHeight
+                }
+                let currentProfileSize = maxProfileSize - ((offset / (minScrollP + profileDefualtOffset)) * (maxProfileSize -  minProfileSize))
+                profileSize = offset > 0 ? currentProfileSize : maxProfileSize
+            }
+            if currentOffset >= minScrollP {
+                viewPositionY = -minScrollP
+                welcomeTitleOpacify = 0
+                viewProfileOpacify = 0
+                headerPaddingBottonAsPercentage = 0
+                profileSize = minProfileSize
+                headerHeight = maxHeaderHeight - 2*minScrollP
+                isEndScrolling = true
+                return
+            }
+            if isEndScrolling {
+                isEndScrolling = false
+            }
+            if isScrollToTop {
+                isScrollToTop = false
+            }
+        }else if offset >= 0 {
+            isScrollToTop = false
+        }
+    }
+    
     var body: some View {
         ZStack(alignment: .top) {
             Colors.appBg.value
@@ -88,13 +133,13 @@ struct Home: View {
                             .resizable()
                             .clipShape(Circle())
                             .scaledToFill()
-                            .frame(width: abs(prifileSize), height: abs(prifileSize))
+                            .frame(width: abs(profileSize), height: abs(profileSize))
                             .padding(2)
                             .background(Color.white)
                             .clipShape(Circle())
-                            .animation(.linear(duration: isEndScrolling ? 0.2 : 0), value: prifileSize)
+                            .animation(.linear(duration: isEndScrolling ? 0.2 : 0), value: profileSize)
                         VStack(alignment: .leading, spacing: 5){
-                            Text("Hello, So Cheat!")
+                            Text("Hello, So Cheat! 123")
                                 .customFont(.WorkSansSemiBold())
                                 .foregroundColor(Color.white)
                                 .opacity(abs(welcomeTitleOpacify))
@@ -212,6 +257,7 @@ struct Home: View {
                                                             .resizable()
                                                             .scaledToFill()
                                                             .frame(width: 40, height: 40)
+
                                                         Text(item.name)
                                                             .customFont(.WorkSansMedium(size: 16))
                                                             .foregroundColor(Colors.textColor.value)
@@ -309,7 +355,7 @@ struct Home: View {
                                                                     .scaledToFill()
                                                                     .frame(width: 60, height: 60)
                                                                     .cornerRadius(10)
-                                                                
+
                                                                 Text(item.name)
                                                                     .customFont(.WorkSansMedium(size: 16))
                                                                     .foregroundColor(.white)
@@ -407,55 +453,14 @@ struct Home: View {
                         }
                         .background {
                             ScrollDetector { offset in
-                                if !isScrollToTop && offset != 0 {
-                                    let currentOffset = offset - profileDefualtOffset
-                                    if currentOffset < minScrollP {
-                                        viewPositionY = -currentOffset
-                                        if minScrollP - offset >= 0 {
-                                            viewProfileOpacify = offset > 0.0 ? (minScrollP - offset) / minScrollP: 1
-
-                                            welcomeTitleOpacify = offset > 15 ? (minScrollP - offset) / (minScrollP - 17): 1
-                                        }else if minScrollP - offset < 0 {
-                                            viewProfileOpacify = 0
-                                            welcomeTitleOpacify = 0
-                                        }
-
-                                        if currentOffset/2 < minScrollP {
-                                            headerPaddingBottonAsPercentage = 0
-                                            headerHeight = maxHeaderHeight - 2*minScrollP
-                                        } else if currentOffset <= 0 {
-                                            headerPaddingBottonAsPercentage = 1
-                                            headerHeight = maxHeaderHeight
-                                        }
-                                        let currentProfileSize = maxProfileSize - ((offset / (minScrollP + profileDefualtOffset)) * (maxProfileSize -  minProfileSize))
-                                        prifileSize = offset > 0 ? currentProfileSize : maxProfileSize
-                                    }
-                                    if currentOffset >= minScrollP {
-                                        viewPositionY = -minScrollP
-                                        welcomeTitleOpacify = 0
-                                        viewProfileOpacify = 0
-                                        headerPaddingBottonAsPercentage = 0
-                                        prifileSize = minProfileSize
-                                        headerHeight = maxHeaderHeight - 2*minScrollP
-                                        isEndScrolling = true
-                                        return
-                                    }
-                                    if isEndScrolling {
-                                        isEndScrolling = false
-                                    }
-                                    if isScrollToTop {
-                                        isScrollToTop = false
-                                    }
-                                }else if offset >= 0 {
-                                    isScrollToTop = false
-                                }
+                                scrollAnimation(offset: offset)
 
                             } onDraggingEnd: { offset, velocity in
                                 if (viewPositionY != -minScrollP || viewPositionY != 0) && offset > 0 && offset < 45 {
                                     viewPositionY = profileDefualtOffset
                                     viewProfileOpacify = 1
                                     welcomeTitleOpacify = 1
-                                    prifileSize = maxProfileSize
+                                    profileSize = maxProfileSize
                                     headerPaddingBottonAsPercentage = viewProfileOpacify
                                     isEndScrolling = true
                                     isScrollToTop = true
@@ -475,13 +480,14 @@ struct Home: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
+        .loadInjection()
         
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        Home()
-            .previewDevice("iPhone 11 Pro Max")
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        Home()
+//            .previewDevice("iPhone 11 Pro Max")
+//    }
+//}

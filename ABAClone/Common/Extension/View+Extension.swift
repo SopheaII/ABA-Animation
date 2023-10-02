@@ -61,7 +61,12 @@ struct PressAndReleaseModifier: ViewModifier {
                         onRelease()
                     }
             )
+//        .eraseToAnyView()
     }
+
+//    #if DEBUG
+//    @ObservedObject var iO = injectionObserver
+//    #endif
 }
 
 extension View {

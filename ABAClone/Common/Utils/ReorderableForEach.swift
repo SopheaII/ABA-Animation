@@ -87,7 +87,12 @@ where Data : Hashable, Content : View {
                 content(item)
             }
         }
+//        .eraseToAnyView()
     }
+
+//    #if DEBUG
+//    @ObservedObject var iO = injectionObserver
+//    #endif
     
     struct DragRelocateDelegate<Data>: DropDelegate
     where Data : Equatable {
