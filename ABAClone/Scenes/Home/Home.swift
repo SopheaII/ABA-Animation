@@ -37,18 +37,12 @@ struct Home: View {
         ServiceInfo(name: "ABA Scan", icon: "icScan"),
         ServiceInfo(name: "Favorites", icon: "icFavorite"),
         ServiceInfo(name: "Transfers", icon: "icTransfer"),
-//        ServiceInfo(name: "E-cash", icon: "icECash"),
-//        ServiceInfo(name: "Services", icon: "icService"),
-//        ServiceInfo(name: "New Account", icon: "icNewAccount"),
+        ServiceInfo(name: "E-cash", icon: "icECash"),
+        ServiceInfo(name: "Services", icon: "icService"),
+        ServiceInfo(name: "New Account", icon: "icNewAccount"),
     ]
     
     @State private var mainServices1 = [
-//        ServiceInfo(name: "Account", icon: "icAccount"),
-//        ServiceInfo(name: "Cards", icon: "icCard"),
-//        ServiceInfo(name: "Payments", icon: "icPayment"),
-//        ServiceInfo(name: "ABA Scan", icon: "icScan"),
-//        ServiceInfo(name: "Favorites", icon: "icFavorite"),
-//        ServiceInfo(name: "Transfers", icon: "icTransfer"),
         ServiceInfo(name: "E-cash", icon: "icECash"),
         ServiceInfo(name: "Services", icon: "icService"),
         ServiceInfo(name: "New Account", icon: "icNewAccount"),
@@ -72,6 +66,10 @@ struct Home: View {
     @State private var isWidgetMove = false
     @State var isItemProviderEnd = false
     
+    #if DEBUG
+        @ObservedObject var iO = injectionObserver
+    #endif
+    
     func scrollAnimation(offset: CGFloat) {
         if !isScrollToTop && offset != 0 {
             let currentOffset = offset - profileDefualtOffset
@@ -79,13 +77,13 @@ struct Home: View {
                 viewPositionY = -currentOffset
                 if minScrollP - offset >= 0 {
                     viewProfileOpacify = offset > 0.0 ? (minScrollP - offset) / minScrollP: 1
-
+                    
                     welcomeTitleOpacify = offset > 15 ? (minScrollP - offset) / (minScrollP - 17): 1
                 }else if minScrollP - offset < 0 {
                     viewProfileOpacify = 0
                     welcomeTitleOpacify = 0
                 }
-
+                
                 if currentOffset/2 < minScrollP {
                     headerPaddingBottonAsPercentage = 0
                     headerHeight = maxHeaderHeight - 2*minScrollP
@@ -117,6 +115,18 @@ struct Home: View {
         }
     }
     
+    func onScrollEnd(offset: CGFloat) {
+        if (viewPositionY != -minScrollP || viewPositionY != 0) && offset > 0 && offset < 45 {
+            viewPositionY = profileDefualtOffset
+            viewProfileOpacify = 1
+            welcomeTitleOpacify = 1
+            profileSize = maxProfileSize
+            headerPaddingBottonAsPercentage = viewProfileOpacify
+            isEndScrolling = true
+            isScrollToTop = true
+        }
+    }
+    
     var body: some View {
         ZStack(alignment: .top) {
             Colors.appBg.value
@@ -139,7 +149,7 @@ struct Home: View {
                             .clipShape(Circle())
                             .animation(.linear(duration: isEndScrolling ? 0.2 : 0), value: profileSize)
                         VStack(alignment: .leading, spacing: 5){
-                            Text("Hello, So Cheat! 123")
+                            Text("Hello, So Cheat!")
                                 .customFont(.WorkSansSemiBold())
                                 .foregroundColor(Color.white)
                                 .opacity(abs(welcomeTitleOpacify))
@@ -167,7 +177,7 @@ struct Home: View {
                             .frame(height: 70)
                             .id(1)
                         VStack(spacing: 5){
-
+                            
                             // MARK: - Balance Card
                             HStack {
                                 Spacer().frame(width: 18)
@@ -181,7 +191,7 @@ struct Home: View {
                                         .cornerRadius(20)
                                     VStack(alignment: .leading, spacing: 10){
                                         HStack{
-                                            Text("$230024.92")
+                                            Text("$1,230,024.92")
                                                 .customFont(.WorkSansMedium(size: 25))
                                                 .foregroundColor(Colors.textColor.value)
                                                 .lineLimit(1)
@@ -193,7 +203,7 @@ struct Home: View {
                                                 .background(Colors.eyeBg.value)
                                                 .cornerRadius(8)
                                         }
-
+                                        
                                         HStack{
                                             ZStack{
                                                 Colors.blueLight.value
@@ -208,7 +218,7 @@ struct Home: View {
                                                 .customFont(.WorkSansRegular(size: 12))
                                                 .foregroundColor(Colors.grayText.value)
                                         }
-
+                                        
                                         HStack {
                                             Image("icReceive")
                                                 .resizable()
@@ -235,15 +245,15 @@ struct Home: View {
                                 }
                                 Spacer().frame(width: 18)
                             }
-
+                            
                             // MARK: - Service Widget
                             HStack {
                                 Spacer().frame(width: 18)
                                 VStack{
                                     LazyVGrid(columns: Array(repeating: .init(.flexible()), count: 3), alignment: .center) {
                                         ReorderableForEach(firstDataList: $mainServices,
-                                                           secondDataList: $mainServices1,
                                                            $draggedServiceItem,
+                                                           isServiceWidget: true,
                                                            allowReordering: $allowServiceReordering,
                                                            hasChangedLocation: $isServiceChangedLocation,
                                                            isUserMoveWidget: $isServiceWidgetMove) { item in
@@ -255,9 +265,9 @@ struct Home: View {
                                                     VStack {
                                                         Image(item.icon)
                                                             .resizable()
-                                                            .scaledToFill()
+                                                            .scaledToFit()
                                                             .frame(width: 40, height: 40)
-
+                                                        
                                                         Text(item.name)
                                                             .customFont(.WorkSansMedium(size: 16))
                                                             .foregroundColor(Colors.textColor.value)
@@ -275,7 +285,7 @@ struct Home: View {
                                         }
                                     }
                                     .padding([.leading, .trailing, .top], 10)
-
+                                    
                                     Divider()
                                         .overlay(.white)
                                         .padding([.top], 5)
@@ -283,15 +293,15 @@ struct Home: View {
                                     ScrollView(.horizontal, showsIndicators: false, content: {
                                         HStack{
                                             Spacer().frame(width: 10)
-                                            ReorderableForEach(firstDataList: $mainServices1,
-                                                               secondDataList: $mainServices,
+                                            ReorderableForEach(firstDataList: $mainServices,
                                                                $draggedServiceItem,
                                                                startIndex: 6,
+                                                               isServiceWidget: true,
                                                                allowReordering: $allowServiceReordering,
                                                                hasChangedLocation: $isServiceChangedLocation,
                                                                isUserMoveWidget: $isServiceWidgetMove) { item in
                                                 Button(action: {
-
+                                                    
                                                 }) {
                                                     HStack {
                                                         Image(item.icon)
@@ -321,16 +331,17 @@ struct Home: View {
                                 .cornerRadius(20)
                                 Spacer().frame(width: 18)
                             }
-
+                            
                             VStack(spacing: 5) {
                                 ReorderableForEach(firstDataList:$widgetInfoList,
-                                                   secondDataList: $widgetInfoList,
                                                    $draggedWidgetItem,
                                                    allowReordering: $allowWidgetReordering,
                                                    hasChangedLocation: $isWidgetChangedLocation,
                                                    isUserMoveWidget: $isWidgetMove) { item in
+                                    
                                     switch item {
                                     case EXPLORED_ID:
+                                        
                                         // MARK: - Explore Services
                                         HStack {
                                             Spacer().frame(width: 18)
@@ -355,18 +366,17 @@ struct Home: View {
                                                                     .scaledToFill()
                                                                     .frame(width: 60, height: 60)
                                                                     .cornerRadius(10)
-
+                                                                
                                                                 Text(item.name)
                                                                     .customFont(.WorkSansMedium(size: 16))
                                                                     .foregroundColor(.white)
                                                                     .lineLimit(1)
-//                                                                    .fixedSize(horizontal: false, vertical: true)
                                                                     .mask{
                                                                         LinearGradient(colors: [.clear, .black, .black, .clear],
                                                                                        startPoint: UnitPoint(x: 1, y: 0), endPoint: UnitPoint(x: -1, y: 0))
-                                                                               .frame(maxWidth: .infinity, maxHeight: .infinity)
+                                                                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                                                                     }
-
+                                                                
                                                             }
                                                             .frame(width: 80)
                                                         }
@@ -384,8 +394,8 @@ struct Home: View {
                                         .onChange(of: isWidgetChangedLocation, perform: { newValue in
                                             isServiceChangedLocation = newValue ? true : false
                                         })
-
                                     case PROMOTION_ID:
+                                        
                                         // MARK: - Promotion
                                         HStack {
                                             Spacer().frame(width: 18)
@@ -406,6 +416,7 @@ struct Home: View {
                                             Spacer().frame(width: 18)
                                         }
                                     case DISCOVER_ID:
+                                        
                                         // MARK: - Discoveries
                                         HStack {
                                             Spacer().frame(width: 18)
@@ -449,22 +460,14 @@ struct Home: View {
                                     }
                                 }
                             }
-
+                            
                         }
                         .background {
                             ScrollDetector { offset in
                                 scrollAnimation(offset: offset)
-
+                                
                             } onDraggingEnd: { offset, velocity in
-                                if (viewPositionY != -minScrollP || viewPositionY != 0) && offset > 0 && offset < 45 {
-                                    viewPositionY = profileDefualtOffset
-                                    viewProfileOpacify = 1
-                                    welcomeTitleOpacify = 1
-                                    profileSize = maxProfileSize
-                                    headerPaddingBottonAsPercentage = viewProfileOpacify
-                                    isEndScrolling = true
-                                    isScrollToTop = true
-                                }
+                                onScrollEnd(offset: offset)
                             }
                         }
                         .onChange(of: isScrollToTop) { newValue in
@@ -473,10 +476,9 @@ struct Home: View {
                             }
                         }
                         .id(2)
-
+                        
                     }
                 })
-//                .padding([.trailing, .leading], 18)
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
@@ -485,9 +487,9 @@ struct Home: View {
     }
 }
 
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        Home()
-//            .previewDevice("iPhone 11 Pro Max")
-//    }
-//}
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        Home()
+            .previewDevice("iPhone 11 Pro Max")
+    }
+}

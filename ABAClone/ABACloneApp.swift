@@ -9,6 +9,13 @@ import SwiftUI
 
 @main
 struct ABACloneApp: App {
+    init() {
+        #if DEBUG
+        var injectionBundlePath = "/Applications/InjectionIII.app/Contents/Resources"
+        injectionBundlePath = "\(injectionBundlePath)/iOSInjection.bundle"
+        Bundle(path: injectionBundlePath)?.load()
+        #endif
+    }
     
     var body: some Scene {
         WindowGroup {

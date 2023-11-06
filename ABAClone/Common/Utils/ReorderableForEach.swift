@@ -11,7 +11,6 @@ import UniformTypeIdentifiers
 public struct ReorderableForEach<Data, Content>: View
 where Data : Hashable, Content : View {
     @Binding var data: [Data]
-    @Binding var secondDataList: [Data]
     @Binding var draggedItem: Data?
     @Binding var allowReordering: Bool
     @Binding var hasChangedLocation: Bool
@@ -20,18 +19,18 @@ where Data : Hashable, Content : View {
     
     var startIndex: Int
     var endIndex: Int
+    var isServiceWidget: Bool = false
     @State var isItemProviderEnd = false
     
     public init(firstDataList data: Binding<[Data]>,
-                secondDataList: Binding<[Data]>,
                 _ draggedItem: Binding<Data?>,
                 startIndex: Int = 0,
+                isServiceWidget: Bool = false,
                 allowReordering: Binding<Bool>,
                 hasChangedLocation: Binding<Bool>,
                 isUserMoveWidget: Binding<Bool>,
                 @ViewBuilder content: @escaping (Data) -> Content) {
         _data = data
-        _secondDataList = secondDataList
         _allowReordering = allowReordering
         _draggedItem = draggedItem
         _hasChangedLocation = hasChangedLocation
@@ -39,66 +38,113 @@ where Data : Hashable, Content : View {
         
         self.startIndex = startIndex
         self.endIndex = startIndex == 0 ? 6 : data.count
+        self.isServiceWidget = isServiceWidget
         self.content = content
     }
     
     public var body: some View {
-        ForEach(data, id: \.self) { item in
-            if allowReordering {
-                content(item)
-                    .onDrag {
-                        draggedItem = item
-                        var provider = MYItemProvider(contentsOf:  URL(string: "\(item.hashValue)")!)
-                        isItemProviderEnd = !hasChangedLocation
-                        hasChangedLocation = true
-                        isUserMoveWidget = false
-                        print("debugtest ----- onDrag")
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
-                            if !isUserMoveWidget && provider != nil {
-                                print("debugtest ----- didEnd asyncAfter \(startIndex)")
-                                provider = nil
-                                draggedItem = nil
-                                hasChangedLocation = false
-                                isItemProviderEnd = true
+        if isServiceWidget {
+            //        ForEach(data, id: \.self) { item in
+            ForEach(Array(data.enumerated()), id: \.offset) { index, item in
+                if index >= startIndex && index < endIndex {
+                    if allowReordering {
+                        content(item)
+                            .onDrag {
+                                draggedItem = item
+                                var provider = MYItemProvider(contentsOf:  URL(string: "\(item.hashValue)")!)
+                                isItemProviderEnd = !hasChangedLocation
+                                hasChangedLocation = true
+                                isUserMoveWidget = false
+                                print("debugtest ----- onDrag")
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+                                    if !isUserMoveWidget && provider != nil {
+                                        print("debugtest ----- didEnd asyncAfter \(startIndex)")
+                                        provider = nil
+                                        draggedItem = nil
+                                        hasChangedLocation = false
+                                        isItemProviderEnd = true
+                                    }
+                                })
+                                provider?.didEnd = {
+                                    print("debugtest ----- \(isItemProviderEnd), \(hasChangedLocation)")
+                                    DispatchQueue.main.async {
+                                        print("debugtest ----- didEnd \(startIndex)")
+                                        draggedItem = nil
+                                        hasChangedLocation = false
+                                        isItemProviderEnd = true
+                                    }
+                                }
+                                
+                                return provider ?? NSItemProvider(object: "\(item.hashValue)" as NSString)
                             }
-                        })
-                        provider?.didEnd = {
-                            print("debugtest ----- \(isItemProviderEnd), \(hasChangedLocation)")
-                            DispatchQueue.main.async {
-                                print("debugtest ----- didEnd \(startIndex)")
-                                draggedItem = nil
-                                hasChangedLocation = false
-                                isItemProviderEnd = true
-                            }
-                        }
-
-                        return provider ?? NSItemProvider(object: "\(item.hashValue)" as NSString)
+                            .onDrop(of: [UTType.plainText], delegate: DragRelocateDelegate(
+                                item: item,
+                                data: $data,
+                                draggedItem: $draggedItem,
+                                hasChangedLocation: $hasChangedLocation,
+                                isItemProviderEnd: $isItemProviderEnd,
+                                isUserMoveWidget: $isUserMoveWidget))
+                            .wiggling(isWiggling: $hasChangedLocation, rotationAmount: 3, bounceAmount: 0.3)
+                    } else {
+                        content(item)
                     }
-                    .onDrop(of: [UTType.plainText], delegate: DragRelocateDelegate(
-                        item: item,
-                        data: $data,
-                        secondData: $secondDataList,
-                        draggedItem: $draggedItem,
-                        hasChangedLocation: $hasChangedLocation,
-                        isItemProviderEnd: $isItemProviderEnd,
-                        isUserMoveWidget: $isUserMoveWidget))
-                    .wiggling(isWiggling: $hasChangedLocation, rotationAmount: 3, bounceAmount: 0.3)
-            } else {
-                content(item)
+                }
+            }
+        }else {
+                ForEach(data, id: \.self) { item in
+//            ForEach(Array(data.enumerated()), id: \.offset) { index, item in
+//                if index >= startIndex && index < endIndex {
+                    if allowReordering {
+                        content(item)
+                            .onDrag {
+                                draggedItem = item
+                                var provider = MYItemProvider(contentsOf:  URL(string: "\(item.hashValue)")!)
+                                isItemProviderEnd = !hasChangedLocation
+                                hasChangedLocation = true
+                                isUserMoveWidget = false
+                                print("debugtest ----- onDrag")
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 3, execute: {
+                                    if !isUserMoveWidget && provider != nil {
+                                        print("debugtest ----- didEnd asyncAfter \(startIndex)")
+                                        provider = nil
+                                        draggedItem = nil
+                                        hasChangedLocation = false
+                                        isItemProviderEnd = true
+                                    }
+                                })
+                                provider?.didEnd = {
+                                    print("debugtest ----- \(isItemProviderEnd), \(hasChangedLocation)")
+                                    DispatchQueue.main.async {
+                                        print("debugtest ----- didEnd \(startIndex)")
+                                        draggedItem = nil
+                                        hasChangedLocation = false
+                                        isItemProviderEnd = true
+                                    }
+                                }
+                                
+                                return provider ?? NSItemProvider(object: "\(item.hashValue)" as NSString)
+                            }
+                            .onDrop(of: [UTType.plainText], delegate: DragRelocateDelegate(
+                                item: item,
+                                data: $data,
+                                draggedItem: $draggedItem,
+                                hasChangedLocation: $hasChangedLocation,
+                                isItemProviderEnd: $isItemProviderEnd,
+                                isUserMoveWidget: $isUserMoveWidget))
+                            .wiggling(isWiggling: $hasChangedLocation, rotationAmount: 3, bounceAmount: 0.3)
+                    } else {
+                        content(item)
+                    }
+//                }
             }
         }
-//        .eraseToAnyView()
     }
-
-//    #if DEBUG
-//    @ObservedObject var iO = injectionObserver
-//    #endif
+    
     
     struct DragRelocateDelegate<Data>: DropDelegate
     where Data : Equatable {
         let item: Data
         @Binding var data: [Data]
-        @Binding var secondData: [Data]
         @Binding var draggedItem: Data?
         @Binding var hasChangedLocation: Bool
         @Binding var isItemProviderEnd: Bool
@@ -108,19 +154,17 @@ where Data : Hashable, Content : View {
             guard let current = draggedItem else { return }
             var from = data.firstIndex(of: current)
             let to = data.firstIndex(of: item)
-            if item == draggedItem || from == nil || to == nil{
-//                if (from == nil) {
-//                    from  = secondData.firstIndex(of: current)
-//                    withAnimation {
-//                        data[to!] = current
-//                        secondData[from!] = item
-//                    }
-//                }
-                
-                print("debugtest ----- dropEntered return")
-                isUserMoveWidget = true
-                return
-            }
+            //            if item == draggedItem || from == nil || to == nil{
+            //                if (from == nil) {
+            //                    from  = secondData.firstIndex(of: current)
+            //                    data[to!] = current
+            //                    secondData[from!] = item
+            //                }
+            
+            //                print("debugtest ----- dropEntered return")
+            //                isUserMoveWidget = true
+            //                return
+            //            }
             isUserMoveWidget = true
             print("debugtest ----- dropEntered")
             
