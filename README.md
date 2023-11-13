@@ -3,7 +3,8 @@
 This project is just a study how animation work on Swiftui.
 
 ## Overview
-![Logo](https://github.com/SopheaII/ABAClone/blob/main/ReadmeSrc/demo.gif?raw=true)
+
+<img src="https://github.com/SopheaII/ABAClone/blob/main/ReadmeSrc/demo.gif?raw=true" width="30%" />
  
  ## Tools & Technologies Used:
 
