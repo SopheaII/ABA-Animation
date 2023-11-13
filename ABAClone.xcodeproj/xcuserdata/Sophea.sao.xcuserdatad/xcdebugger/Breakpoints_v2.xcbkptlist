@@ -3,4 +3,60 @@
    uuid = "F7192B27-A9C4-44F5-A6CD-B32A78C7DE07"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "634F43C9-F753-4A23-9F95-9AA8961D4080"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "Yes"
+            filePath = "ABAClone/Common/Utils/ReorderableForEach.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "163"
+            endingLineNumber = "163">
+            <Actions>
+               <BreakpointActionProxy
+                  ActionExtensionID = "Xcode.BreakpointAction.DebuggerCommand">
+                  <ActionContent
+                     consoleCommand = "po &quot;debugtest --- dropEnterd \(item)&quot;">
+                  </ActionContent>
+               </BreakpointActionProxy>
+            </Actions>
+            <Locations>
+               <Location
+                  uuid = "634F43C9-F753-4A23-9F95-9AA8961D4080 - bd14e2d20c369f91"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ABAClone.ReorderableForEach.DragRelocateDelegate.dropEntered(info: SwiftUI.DropInfo) -&gt; ()"
+                  moduleName = "ABAClone"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Sophea.sao/Desktop/Swift-Development/ABAClone/ABAClone/Common/Utils/ReorderableForEach.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "103"
+                  endingLineNumber = "103"
+                  offsetFromSymbolStart = "2280">
+               </Location>
+               <Location
+                  uuid = "634F43C9-F753-4A23-9F95-9AA8961D4080 - bd14e2d20c369f91"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "ABAClone.ReorderableForEach.DragRelocateDelegate.dropEntered(info: SwiftUI.DropInfo) -&gt; ()"
+                  moduleName = "ABAClone"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/Sophea.sao/Desktop/Swift-Development/ABAClone/ABAClone/Common/Utils/ReorderableForEach.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "103"
+                  endingLineNumber = "103"
+                  offsetFromSymbolStart = "2304">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

@@ -21,9 +21,9 @@ struct Home: View {
     let maxHeaderHeight: CGFloat      = 50
     let minProfileSize: CGFloat       = 35
     let maxProfileSize: CGFloat       = 50
-    let profileDefualtOffset: CGFloat = 30
+    let profileDefaultOffset: CGFloat = 30
     
-    @State private var headerPaddingBottonAsPercentage: CGFloat = 1
+    @State private var headerPaddingBottomAsPercentage: CGFloat = 1
     @State private var viewPositionY: CGFloat                   = 30
     @State private var headerHeight: CGFloat                    = 50
     @State private var viewProfileOpacify: Double               = 1
@@ -72,7 +72,7 @@ struct Home: View {
     
     func scrollAnimation(offset: CGFloat) {
         if !isScrollToTop && offset != 0 {
-            let currentOffset = offset - profileDefualtOffset
+            let currentOffset = offset - profileDefaultOffset
             
             if currentOffset < minScrollP {
                 // Scrolling up
@@ -87,21 +87,21 @@ struct Home: View {
                 }
                 
                 if currentOffset / 2 < minScrollP {
-                    headerPaddingBottonAsPercentage = 0
+                    headerPaddingBottomAsPercentage = 0
                     headerHeight = maxHeaderHeight - 2 * minScrollP
                 } else if currentOffset <= 0 {
-                    headerPaddingBottonAsPercentage = 1
+                    headerPaddingBottomAsPercentage = 1
                     headerHeight = maxHeaderHeight
                 }
                 
-                let currentProfileSize = maxProfileSize - ((offset / (minScrollP + profileDefualtOffset)) * (maxProfileSize -  minProfileSize))
+                let currentProfileSize = maxProfileSize - ((offset / (minScrollP + profileDefaultOffset)) * (maxProfileSize -  minProfileSize))
                 profileSize = offset > 0 ? currentProfileSize : maxProfileSize
             } else {
                 // Scrolling down
                 viewPositionY = -minScrollP
                 welcomeTitleOpacify = 0
                 viewProfileOpacify = 0
-                headerPaddingBottonAsPercentage = 0
+                headerPaddingBottomAsPercentage = 0
                 profileSize = minProfileSize
                 headerHeight = maxHeaderHeight - 2 * minScrollP
                 isEndScrolling = true
@@ -122,11 +122,11 @@ struct Home: View {
     
     func onScrollEnd(offset: CGFloat) {
         if (viewPositionY != -minScrollP || viewPositionY != 0) && offset > 0 && offset < 45 {
-            viewPositionY = profileDefualtOffset
+            viewPositionY = profileDefaultOffset
             viewProfileOpacify = 1
             welcomeTitleOpacify = 1
             profileSize = maxProfileSize
-            headerPaddingBottonAsPercentage = viewProfileOpacify
+            headerPaddingBottomAsPercentage = viewProfileOpacify
             isEndScrolling = true
             isScrollToTop = true
         }
