@@ -1,4 +1,4 @@
-# ABA clone
+# ABA animation
 
 This project is just a study how animation work on Swiftui.
 
