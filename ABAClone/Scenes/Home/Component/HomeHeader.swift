@@ -20,10 +20,10 @@ struct HomeHeader: View {
                 .scaledToFill()
                 .frame(width: 30, height: 30)
         }
-        .eraseToAnyView()
+//        .eraseToAnyView()
     }
 
-    #if DEBUG
-    @ObservedObject var iO = injectionObserver
-    #endif
+//    #if DEBUG
+//    @ObservedObject var iO = injectionObserver
+//    #endif
 }
