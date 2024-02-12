@@ -66,9 +66,9 @@ struct Home: View {
     @State private var isWidgetMove = false
     @State var isItemProviderEnd = false
     
-//#if DEBUG
-//    @ObservedObject var iO = injectionObserver
-//#endif
+#if DEBUG
+    @ObservedObject var iO = injectionObserver
+#endif
     
     func scrollAnimation(offset: CGFloat) {
         if !isScrollToTop && offset != 0 {
@@ -311,7 +311,7 @@ struct Home: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
             }
         }
-//        .loadInjection()
+        .loadInjection()
     }
 }
 

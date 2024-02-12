@@ -27,12 +27,12 @@ struct WiggleRotationModifier: ViewModifier {
         content
             .rotationEffect(Angle(degrees: isWiggling ? rotationAmount : 0))
             .animation(isWiggling ? AnimationUtils.wiggleAnimation(interval: 0.14, variance: 0.025) : .default, value: isWiggling)
-//            .eraseToAnyView()
+            .eraseToAnyView()
     }
 
-//    #if DEBUG
-//    @ObservedObject var iO = injectionObserver
-//    #endif
+    #if DEBUG
+    @ObservedObject var iO = injectionObserver
+    #endif
 }
 
 struct WiggleBounceModifier: GeometryEffect {
